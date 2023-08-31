@@ -1,0 +1,36 @@
+#First perform the edge coloring
+from sage.graphs.graph_coloring import edge_coloring
+G=graphs.CirculantGraph(9,[1,2,3])
+H1=G.subgraph([1,2,3,4,6,7,8])
+M1=H1.matching()
+H2=G.subgraph([0,2,3,4,5,7,8])
+H2.delete_edges(M1)
+M2=H2.matching()
+H3=G.subgraph([0,1,3,4,5,6,8])
+H3.delete_edges(M2)
+H3.delete_edges(M1)
+M3=H3.matching()
+H4=G.subgraph([0,1,2,4,5,6,7])
+H4.delete_edges(M1)
+H4.delete_edges(M2)
+H4.delete_edges(M3)
+M4=H4.matching()
+H5=G.subgraph([0,1,2,3,5,6,7,8])
+H5.delete_edges(M1)
+H5.delete_edges(M2)
+H5.delete_edges(M3)
+H5.delete_edges(M4)
+M5=H5.matching()
+G.delete_edges(M1)
+G.delete_edges(M2)
+G.delete_edges(M3)
+G.delete_edges(M4)
+G.delete_edges(M5)
+[M1,M2,M3,M4,M5,edge_coloring(G,hex_colors=True)]
+
+#Now perform both vertex coloring and assign the edge color classes a specified color with color classes of vertices and edges intersecting.
+from sage.graphs.graph_coloring import edge_coloring
+G=graphs.CirculantGraph(10,[1,2])
+d1={'#1f77b4':[0,5], '#ff7f0e':[1,6], '#2ca02c':[2,7], '#d62728':[3,8], '#9467bd':[4,9]}
+d2={'#1f77b4':[(1,9),(2,3),(4,6),(7,8)], '#ff7f0e':[(0,2),(3,4),(5,7),(8,9)], '#2ca02c':[(0,9),(1,3),(4,5),(6,8)], '#d62728':[(0,1),(2,4),(5,6),(7,9)], '#9467bd':[(0,8),(1,2),(3,5),(6,7)]}
+G.show(vertex_colors=d1,edge_colors=d2)
